@@ -36,6 +36,7 @@ var BPCStart = (function ModuleSpace() {
       }
     };
   }
+  
   function toQuaternary(n, length) {
     var r = Number(n).toString(4);
     if (r.length < length) {
@@ -45,6 +46,7 @@ var BPCStart = (function ModuleSpace() {
     }
     return r;
   }
+  
   function toBinary(n, length) {
     var r = Number(n).toString(2);
     if (r.length < length) {
@@ -54,6 +56,7 @@ var BPCStart = (function ModuleSpace() {
     }
     return r;
   }
+
   function getCheckCodeP3(frame) {
     var binary = '';
     binary += frame.P1;
@@ -65,6 +68,7 @@ var BPCStart = (function ModuleSpace() {
       return '' + item === '1';
     }).length % 2;
   }
+
   function getCheckCodeP4(frame) {
     var binary = '';
     binary += frame.day;
@@ -74,6 +78,7 @@ var BPCStart = (function ModuleSpace() {
       return '' + item === '1';
     }).length % 2;
   }
+
   function generateDateInfo(time) {
     time = time || Date.now();
     var localTime = new Date(time);
@@ -102,6 +107,7 @@ var BPCStart = (function ModuleSpace() {
     frame1.P4 = '0' + getCheckCodeP4(frame1);
     return frame1;
   }
+
   function dateInfoTo4String(frames) {
     return [
       toQuaternary(parseInt(frames.P1, 2), 1),
@@ -116,6 +122,7 @@ var BPCStart = (function ModuleSpace() {
       toQuaternary(parseInt(frames.P4, 2), 1),
     ].join('');
   }
+
   function dateInfoStringToSoundCode(dateString) {
     return dateString.split('').map(function(one) {
       if (one === '0') return 0.1;
@@ -129,24 +136,22 @@ var BPCStart = (function ModuleSpace() {
   var oscillator = null;
   function reinitAudio() {
     var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-
     oscillator = audioCtx.createOscillator();
-
     oscillator.type = 'square';
     oscillator.frequency.setValueAtTime(frequency, audioCtx.currentTime);
     oscillator.connect(audioCtx.destination);
   }
+
   function startAudioIfNeeded() {
     if (oscillator) return;
     var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-
     oscillator = audioCtx.createOscillator();
-
     oscillator.type = 'square';
     oscillator.frequency.setValueAtTime(frequency, audioCtx.currentTime);
     oscillator.connect(audioCtx.destination);
     oscillator.start();
   }
+
   var stopFunction = null;
   var isRunning = false;
   function BPCStart(utctime, cb) {

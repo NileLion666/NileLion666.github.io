@@ -234,26 +234,33 @@
         }
     });
 
+    var pageWidth = Math.max(     document.body.scrollWidth,
+        document.documentElement.scrollWidth,
+        document.body.offsetWidth, 
+        document.documentElement.offsetWidth,
+        document.documentElement.clientWidth
+    );
+
     var nowtime = document.getElementById('time');
     var canvas = document.getElementById('canvas');
     var ctx2d = canvas.getContext('2d');
     var w = canvas.width;
     var h = canvas.height;
-    render();
 
+    render();
     function render() {
         var nnow = new Date();
 
         nowtime.innerText = nnow.toLocaleString()+' 星期'+'日一二三四五六'.charAt(nnow.getDay());
 
         var i;
-        ctx2d.clearRect(0, 0, w, h);
+        ctx2d.clearRect(0, 0, pageWidth, h);
         if (!signal) {
             requestAnimationFrame(render);
             return;
         }
-        var now = Math.floor(Date.now() / 1000) % 60;
 
+        var now = Math.floor(Date.now() / 1000) % 60;
         for (i = 0; i < signal.length; i++) {
             if (i == now) {
                 ctx2d.fillStyle = "#FF0000";
@@ -263,7 +270,12 @@
                 else if (signal[i] < 0.35) ctx2d.fillStyle = "#7F7F7F";
                 else ctx2d.fillStyle = "#007F00";
             }
-            ctx2d.fillRect((i % 20) * 30, Math.floor(i / 20) * 80, 30 * signal[i] * 2, 60);
+
+            var x = (i % 20) * ((pageWidth - 40.0) / 20.0);
+            var y = Math.floor(i / 20.0) * 40.0;
+            var width = 30.0 * signal[i] * 2;
+            var height = 30.0;
+            ctx2d.fillRect(x, y, width, height);
         }
         requestAnimationFrame(render);
     }

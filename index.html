@@ -1,17 +1,13 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-touch-fullscreen" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
   <title>在线电波对时</title>
   <style>
 	#time{
-		font-size: 68px;
-		font-weight: normal;
-		color: #000;
-	}
-	#timeTitle{
-		font-size: 24px;
-		font-weight: normal;
+		font-size: 64px;
 		color: #000;
 	}
 	.button{
@@ -29,21 +25,35 @@
 	}
 
   </style>
+  <script type="text/javascript">
+  	window.onload = function(){
+  		var pageWidth = Math.max(     document.body.scrollWidth,
+        	document.documentElement.scrollWidth,
+        	document.body.offsetWidth, 
+        	document.documentElement.offsetWidth,
+        	document.documentElement.clientWidth
+    	);
+		document.getElementById("canvas").width = pageWidth - 40;
+		document.getElementById("canvas").height = 120;
+	}
+  </script>
 </head>
 <body>
-	<table style="width: 100%; height: 100%; padding-top: 5%; padding-bottom: 10%;">
-  <tr>
-    <td valign="middle" align="center">
-      <canvas id="canvas" width="600" height="100"></canvas>
-    </td>
-  </tr>
+	<center>
+		<table style="width: 100%; height: 100%;">
+	<tr>
+		<td valign="middle" align="center">
+			<br>
+			<canvas id="canvas"></canvas>
+		</td>
+	</tr>
 	<tr>
 		<td valign="middle" align="center">
 			<span id="time"></span>
 			<div>
     			<button id="control-button" class="button">开始对时</button>
-  		</div>
-      <script src="bpc.js"></script>
+  		    </div>
+            <script src="bpc.js"></script>
 		</td>
 	</tr>
 	<tr>
@@ -51,10 +61,11 @@
 			<br>
 			<br>
 			适用于遵循BPC标准的电波表(西铁城, 卡西欧等....)
-      <br>
-      目前仅能在PC端浏览器使用...
+            <br>
+      		目前仅能在PC端浏览器使用...
 		</td>
 	</tr>
 	</table>
+	</center>
 </body>
 </html>
